@@ -3,232 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premium HTML Mailer Store</title>
+    <title>Premium Store</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #2481cc;
-            --body-bg: #0e1621;
-            --card-bg: #1c2732;
-            --text-main: #ffffff;
-            --text-sub: #8e97a1;
-            --diamond: #00d4ff;
-            --star: #ff9800;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--body-bg);
-            color: var(--text-main);
-            padding-bottom: 40px;
-            overflow-x: hidden;
-        }
-
-        /* Header Design */
-        .header {
-            background: linear-gradient(180deg, var(--primary) 0%, #165b91 100%);
-            padding: 30px 20px 60px;
-            border-radius: 0 0 35px 35px;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .header h2 { font-size: 22px; margin-bottom: 5px; font-weight: 700; }
-        .header p { font-size: 13px; opacity: 0.8; letter-spacing: 0.5px; }
-
-        /* Floating Balance Card */
-        .balance-card {
-            display: flex;
-            background: rgba(28, 39, 50, 0.95);
-            backdrop-filter: blur(15px);
-            margin: -35px 20px 0;
-            padding: 20px;
-            border-radius: 24px;
-            justify-content: space-around;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 10;
-        }
-
-        .bal-box { text-align: center; flex: 1; }
-        .bal-box:first-child { border-right: 1px solid rgba(255,255,255,0.1); }
-        .bal-box span { font-size: 11px; color: var(--text-sub); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 5px; }
-        .bal-box b { font-size: 19px; font-weight: 800; }
-        .dia-text { color: var(--diamond); }
-
-        /* Offer Sections */
-        .section-title {
-            margin: 35px 25px 15px;
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            display: flex;
-            align-items: center;
-        }
-        .section-title i { margin-right: 10px; color: var(--primary); }
-
-        .offer-container { padding: 0 20px; }
-
-        .offer-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 18px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.2s ease;
-        }
-
-        .offer-card:active { transform: scale(0.96); background: #232e3b; }
-
-        .offer-left { display: flex; align-items: center; }
-        .offer-icon {
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            margin-right: 15px;
-        }
-
-        .offer-info b { font-size: 16px; display: block; margin-bottom: 2px; }
-        .offer-info span { font-size: 12px; color: var(--text-sub); }
-
-        /* Premium Buttons */
-        .buy-btn {
-            padding: 10px 18px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 800;
-            font-size: 13px;
-            cursor: pointer;
-            color: white;
-            min-width: 90px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .btn-star { background: linear-gradient(45deg, #ff9800, #f44336); }
-        .btn-dia { background: linear-gradient(45deg, #00d4ff, #0088cc); }
-
-        /* Loader Animation */
-        .loading { opacity: 0.5; pointer-events: none; }
+        :root { --primary: #2481cc; --bg: #0e1621; --card: #1c2732; --text: #ffffff; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 30px; }
+        .header { background: linear-gradient(180deg, #2481cc, #165b91); padding: 30px 20px; text-align: center; border-radius: 0 0 30px 30px; }
+        .balance-card { display: flex; background: var(--card); margin: -20px 20px 20px; padding: 20px; border-radius: 20px; justify-content: space-around; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .bal-box { text-align: center; }
+        .bal-box span { font-size: 11px; color: #8e97a1; text-transform: uppercase; }
+        .bal-box b { display: block; font-size: 20px; margin-top: 5px; }
+        .section-title { padding: 10px 25px; font-size: 14px; color: #8e97a1; text-transform: uppercase; }
+        .offer-card { background: var(--card); margin: 0 20px 10px; padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .buy-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <p>TELECOM DASHBOARD</p>
-    <h2 id="user-name">Premium User</h2>
+    <h2 id="user-name">Premium Store</h2>
 </div>
 
 <div class="balance-card">
-    <div class="bal-box">
-        <span><i class="fas fa-gem"></i> My Diamonds</span>
-        <b class="dia-text" id="stat-diamonds">0</b>
-    </div>
-    <div class="bal-box">
-        <span><i class="fas fa-envelope"></i> Mail Credits</span>
-        <b id="stat-mails">0</b>
-    </div>
+    <div class="bal-box"><span>Diamonds</span><b id="stat-diamonds" style="color:#00d4ff">0</b></div>
+    <div class="bal-box"><span>Mail Credits</span><b id="stat-mails">0</b></div>
 </div>
 
-<div class="section-title"><i class="fas fa-bolt"></i> Buy Diamonds (With Stars)</div>
-<div class="offer-container" id="diamond-shop"></div>
+<div class="section-title">💎 Diamond Refill</div>
+<div id="diamond-shop"></div>
 
-<div class="section-title"><i class="fas fa-shopping-basket"></i> Buy Mails (With Diamonds)</div>
-<div class="offer-container" id="mail-shop"></div>
+<div class="section-title">📧 Mail Offers</div>
+<div id="mail-shop"></div>
 
 <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
-    tg.enableClosingConfirmation();
 
-    // ১. আপনার Ngrok এর URL এখানে দিন (যেমন: https://abcd.ngrok-free.app/get-invoice)
+    // ১. আপনার Ngrok URL এখানে দিন (সবচেয়ে গুরুত্বপূর্ণ)
     const API_URL = "https://your-ngrok-url.ngrok-free.app/get-invoice";
 
-    // URL থেকে ডাটা রিসিভ করা
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('user_id');
-    document.getElementById('user-name').innerText = tg.initDataUnsafe?.user?.first_name || "Premium User";
     document.getElementById('stat-diamonds').innerText = urlParams.get('diamonds') || '0';
     document.getElementById('stat-mails').innerText = urlParams.get('mails') || '0';
+    document.getElementById('user-name').innerText = tg.initDataUnsafe?.user?.first_name || "Store";
 
-    // ডায়মন্ড অফার জেনারেট করা
-    const dShop = document.getElementById('diamond-shop');
-    for (let d = 25; d <= 500; d += 25) {
-        let stars = Math.floor(d * 1.28);
-        dShop.innerHTML += `
-            <div class="offer-card">
-                <div class="offer-left">
-                    <div class="offer-icon" style="color:var(--diamond)"><i class="fas fa-gem"></i></div>
-                    <div class="offer-info"><b>${d} Diamonds</b><span>Pay with Stars</span></div>
-                </div>
-                <button class="buy-btn btn-star" onclick="handlePurchase('buy_diamond', ${d}, ${stars}, '⭐️')">⭐️ ${stars}</button>
-            </div>`;
+    // অফার জেনারেট করা
+    function loadOffers() {
+        const dList = document.getElementById('diamond-shop');
+        for (let d = 25; d <= 200; d += 25) {
+            let stars = Math.floor(d * 1.28);
+            dList.innerHTML += `<div class="offer-card"><div><b>${d} Diamonds</b><br><small>⭐️ ${stars} Stars</small></div><button class="buy-btn" onclick="purchase('buy_diamond', ${d}, ${stars})">Buy</button></div>`;
+        }
+
+        const mList = document.getElementById('mail-shop');
+        const mOff = [{m:40,d:25}, {m:85,d:50}, {m:130,d:75}, {m:170,d:100}, {m:330,d:200}];
+        mOff.forEach(o => {
+            mList.innerHTML += `<div class="offer-card"><div><b>${o.m} Mails</b><br><small>💎 ${o.d} Diamonds</small></div><button class="buy-btn" onclick="purchase('buy_mail', ${o.m}, ${o.d})">Buy</button></div>`;
+        });
     }
+    loadOffers();
 
-    // মেইল অফার জেনারেট করা
-    const mailOffers = [
-        {m: 40, d: 25}, {m: 85, d: 50}, {m: 130, d: 75}, {m: 170, d: 100},
-        {m: 210, d: 125}, {m: 250, d: 150}, {m: 290, d: 175}, {m: 330, d: 200}, {m: 820, d: 500}
-    ];
-    const mShop = document.getElementById('mail-shop');
-    mailOffers.forEach(o => {
-        mShop.innerHTML += `
-            <div class="offer-card">
-                <div class="offer-left">
-                    <div class="offer-icon" style="color:white"><i class="fas fa-paper-plane"></i></div>
-                    <div class="offer-info"><b>${o.m} HTML Mails</b><span>Use ${o.d} Diamonds</span></div>
-                </div>
-                <button class="buy-btn btn-dia" onclick="handlePurchase('buy_mail', ${o.m}, ${o.d}, '💎')">💎 ${o.d}</button>
-            </div>`;
-    });
-
-    async function handlePurchase(type, amt, price, unit) {
-        tg.showConfirm(`Confirm purchase of ${amt} units for ${unit}${price}?`, async (confirmed) => {
+    async function purchase(type, amt, price) {
+        tg.showConfirm(`আপনি কি এটি কিনতে চান?`, async (confirmed) => {
             if (confirmed) {
-                tg.MainButton.setText("Generating Invoice...").show();
-                tg.HapticFeedback.impactOccurred('medium');
-
+                tg.MainButton.setText("Processing...").show();
                 try {
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            user_id: userId,
-                            amount: amt,
-                            cost: price,
-                            action: type
-                        })
+                        body: JSON.stringify({ user_id: userId, amount: amt, cost: price, action: type })
                     });
-
-                    const result = await response.json();
-
-                    if (result.ok) {
-                        // এই ফাংশনটি অ্যাপের ভেতরেই পেমেন্ট পপ-আপ ওপেন করবে
-                        tg.openInvoice(result.invoice_link, function(status) {
+                    const res = await response.json();
+                    if (res.ok) {
+                        // ইন-অ্যাপ পেমেন্ট উইন্ডো খোলা
+                        tg.openInvoice(res.invoice_link, (status) => {
                             if (status === 'paid') {
-                                tg.HapticFeedback.notificationOccurred('success');
-                                tg.showAlert("✅ Success! Your account is updated.");
-                                location.reload(); // ব্যালেন্স রিফ্রেশ
+                                tg.showAlert("✅ পেমেন্ট সফল!");
+                                location.reload();
                             }
                         });
-                    } else {
-                        tg.showAlert("Server Error: " + result.error);
                     }
                 } catch (e) {
-                    tg.showAlert("Connection Error! Is Ngrok running?");
+                    tg.showAlert("Server Error! নিশ্চিত করুন Ngrok সচল আছে।");
                 } finally {
                     tg.MainButton.hide();
                 }
