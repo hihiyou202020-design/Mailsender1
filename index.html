@@ -3,93 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premium Store</title>
+    <title>Premium Mail Store</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #2481cc; --bg: #0e1621; --card: #1c2732; --text: #ffffff; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 30px; }
-        .header { background: linear-gradient(180deg, #2481cc, #165b91); padding: 30px 20px; text-align: center; border-radius: 0 0 30px 30px; }
-        .balance-card { display: flex; background: var(--card); margin: -20px 20px 20px; padding: 20px; border-radius: 20px; justify-content: space-around; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-        .bal-box { text-align: center; }
-        .bal-box span { font-size: 11px; color: #8e97a1; text-transform: uppercase; }
-        .bal-box b { display: block; font-size: 20px; margin-top: 5px; }
-        .section-title { padding: 10px 25px; font-size: 14px; color: #8e97a1; text-transform: uppercase; }
-        .offer-card { background: var(--card); margin: 0 20px 10px; padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .buy-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        :root { --primary: #0088cc; --bg: #0e1621; --card: #1c2732; --diamond: #00d4ff; }
+        body { font-family: sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; }
+        .header { background: linear-gradient(180deg, #2481cc, #165b91); padding: 40px 20px; text-align: center; border-radius: 0 0 30px 30px; }
+        .balance-card { display: flex; background: var(--card); margin: -25px 20px 20px; padding: 20px; border-radius: 20px; justify-content: space-around; box-shadow: 0 10px 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
+        .bal-box b { display: block; font-size: 22px; color: var(--diamond); }
+        .section-title { padding: 10px 25px; font-size: 13px; color: #8e97a1; text-transform: uppercase; letter-spacing: 1px; }
+        .offer-card { background: var(--card); margin: 0 20px 10px; padding: 18px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; }
+        .buy-btn { background: var(--primary); border: none; padding: 12px 18px; color: white; border-radius: 12px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h2 id="user-name">Premium Store</h2>
-</div>
+<div class="header"><h2>Premium Store</h2><p>Official Refill Center</p></div>
 
 <div class="balance-card">
-    <div class="bal-box"><span>Diamonds</span><b id="stat-diamonds" style="color:#00d4ff">0</b></div>
-    <div class="bal-box"><span>Mail Credits</span><b id="stat-mails">0</b></div>
+    <div class="bal-box"><span>Diamonds</span><b id="stat-diamonds">0</b></div>
+    <div class="bal-box"><span>Mails</span><b id="stat-mails" style="color:white">0</b></div>
 </div>
 
-<div class="section-title">💎 Diamond Refill</div>
-<div id="diamond-shop"></div>
+<div class="section-title">💎 Buy Diamonds (Stars)</div>
+<div id="diamond-offers"></div>
 
-<div class="section-title">📧 Mail Offers</div>
-<div id="mail-shop"></div>
+<div class="section-title">📧 Buy Mails (Diamonds)</div>
+<div id="mail-offers"></div>
 
 <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // ১. আপনার Ngrok URL এখানে দিন (সবচেয়ে গুরুত্বপূর্ণ)
-    const API_URL = "https://your-ngrok-url.ngrok-free.app/get-invoice";
+    // হোস্টিং করার পর পাওয়া এপিআই লিংক এখানে বসান
+    const API_BASE = "https://your-cloud-app.koyeb.app"; 
 
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('user_id');
     document.getElementById('stat-diamonds').innerText = urlParams.get('diamonds') || '0';
     document.getElementById('stat-mails').innerText = urlParams.get('mails') || '0';
-    document.getElementById('user-name').innerText = tg.initDataUnsafe?.user?.first_name || "Store";
 
-    // অফার জেনারেট করা
-    function loadOffers() {
-        const dList = document.getElementById('diamond-shop');
-        for (let d = 25; d <= 200; d += 25) {
-            let stars = Math.floor(d * 1.28);
-            dList.innerHTML += `<div class="offer-card"><div><b>${d} Diamonds</b><br><small>⭐️ ${stars} Stars</small></div><button class="buy-btn" onclick="purchase('buy_diamond', ${d}, ${stars})">Buy</button></div>`;
+    function initStore() {
+        const dDiv = document.getElementById('diamond-offers');
+        for(let d=25; d<=500; d+=25) {
+            let s = Math.floor(d * 1.28);
+            dDiv.innerHTML += `<div class="offer-card"><div><b>💎 ${d} Diamonds</b><br><small>⭐️ ${s} Stars</small></div><button class="buy-btn" onclick="buyDiamond(${d}, ${s})">⭐️ Buy</button></div>`;
         }
 
-        const mList = document.getElementById('mail-shop');
-        const mOff = [{m:40,d:25}, {m:85,d:50}, {m:130,d:75}, {m:170,d:100}, {m:330,d:200}];
+        const mDiv = document.getElementById('mail-offers');
+        const mOff = [{m:40,d:25}, {m:85,d:50}, {m:130,d:75}, {m:170,d:100}, {m:330,d:200}, {m:820,d:500}];
         mOff.forEach(o => {
-            mList.innerHTML += `<div class="offer-card"><div><b>${o.m} Mails</b><br><small>💎 ${o.d} Diamonds</small></div><button class="buy-btn" onclick="purchase('buy_mail', ${o.m}, ${o.d})">Buy</button></div>`;
+            mDiv.innerHTML += `<div class="offer-card"><div><b>📧 ${o.m} Mails</b><br><small>💎 ${o.d} Diamonds</small></div><button class="buy-btn" onclick="buyMail(${o.m}, ${o.d})">💎 Buy</button></div>`;
         });
     }
-    loadOffers();
+    initStore();
 
-    async function purchase(type, amt, price) {
-        tg.showConfirm(`আপনি কি এটি কিনতে চান?`, async (confirmed) => {
-            if (confirmed) {
-                tg.MainButton.setText("Processing...").show();
-                try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ user_id: userId, amount: amt, cost: price, action: type })
+    async function buyDiamond(amt, price) {
+        tg.showConfirm(`Confirm purchase?`, async (ok) => {
+            if(ok) {
+                const res = await fetch(`${API_BASE}/get-invoice`, {
+                    method:'POST', body: JSON.stringify({user_id:userId, amount:amt, cost:price, action:'buy_diamond'})
+                });
+                const data = await res.json();
+                if(data.ok) {
+                    // ইন-অ্যাপ পেমেন্ট শিট ওপেন
+                    tg.openInvoice(data.invoice_link, (status) => {
+                        if(status==='paid') { tg.showAlert("Payment Success!"); location.reload(); }
                     });
-                    const res = await response.json();
-                    if (res.ok) {
-                        // ইন-অ্যাপ পেমেন্ট উইন্ডো খোলা
-                        tg.openInvoice(res.invoice_link, (status) => {
-                            if (status === 'paid') {
-                                tg.showAlert("✅ পেমেন্ট সফল!");
-                                location.reload();
-                            }
-                        });
-                    }
-                } catch (e) {
-                    tg.showAlert("Server Error! নিশ্চিত করুন Ngrok সচল আছে।");
-                } finally {
-                    tg.MainButton.hide();
                 }
+            }
+        });
+    }
+
+    async function buyMail(amt, price) {
+        tg.showConfirm(`Exchange ${price} Diamonds for ${amt} Mails?`, async (ok) => {
+            if(ok) {
+                const res = await fetch(`${API_BASE}/swap-mails`, {
+                    method:'POST', body: JSON.stringify({user_id:userId, amount:amt, cost:price})
+                });
+                const data = await res.json();
+                if(data.ok) { tg.showAlert("Mails Added!"); location.reload(); }
+                else { tg.showAlert("Insufficient Diamonds!"); }
             }
         });
     }
