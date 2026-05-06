@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium HTML Mail Store</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2481cc;
+            --secondary: #1d2733;
+            --accent-diamond: #00d4ff;
+            --accent-star: #ff9800;
+            --text-main: #ffffff;
+            --text-sub: #8e97a1;
+            --card-bg: #1c2732;
+            --body-bg: #0e1621;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-main);
+            padding-bottom: 30px;
+            user-select: none;
+        }
+
+        /* Top Header Section */
+        .header {
+            background: linear-gradient(180deg, #2481cc 0%, #165b91 100%);
+            padding: 30px 20px 60px;
+            border-radius: 0 0 40px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .user-profile { margin-bottom: 20px; }
+        .user-profile img { width: 60px; height: 60px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.3); margin-bottom: 10px; }
+        .user-profile h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.5px; }
+
+        /* Balance Floating Card */
+        .balance-container {
+            display: flex;
+            background: rgba(28, 39, 50, 0.9);
+            backdrop-filter: blur(15px);
+            margin: -40px 20px 0;
+            padding: 20px;
+            border-radius: 24px;
+            justify-content: space-around;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .bal-box { text-align: center; flex: 1; }
+        .bal-box:first-child { border-right: 1px solid rgba(255,255,255,0.1); }
+        .bal-box span { font-size: 11px; color: var(--text-sub); text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+        .bal-box div { font-size: 20px; font-weight: 800; margin-top: 5px; }
+        .diamond-val { color: var(--accent-diamond); }
+        .mail-val { color: #ffffff; }
+
+        /* Offer Sections */
+        .section-title {
+            margin: 30px 25px 15px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+        .section-title i { margin-right: 10px; color: var(--primary); }
+
+        .offer-grid { padding: 0 20px; }
+
+        .offer-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .offer-card:active { transform: scale(0.97); background: #232e3b; }
+
+        .offer-info { display: flex; align-items: center; }
+        .offer-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-right: 15px;
+        }
+
+        .offer-details b { font-size: 17px; display: block; margin-bottom: 2px; }
+        .offer-details span { font-size: 12px; color: var(--text-sub); }
+
+        /* Buttons */
+        .buy-btn {
+            padding: 12px 18px;
+            border-radius: 14px;
+            border: none;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            min-width: 95px;
+        }
+
+        .btn-star { background: linear-gradient(45deg, #ff9800, #f44336); color: white; }
+        .btn-dia { background: linear-gradient(45deg, #00d4ff, #0088cc); color: white; }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .offer-card { animation: fadeIn 0.4s ease forwards; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="user-profile">
+        <h2 id="user-name">Welcome</h2>
+        <p style="font-size: 12px; opacity: 0.7;">Official Mail Store Dashboard</p>
+    </div>
+</div>
+
+<div class="balance-container">
+    <div class="bal-box">
+        <span><i class="fas fa-gem"></i> Diamonds</span>
+        <div class="diamond-val" id="user-diamonds">0</div>
+    </div>
+    <div class="bal-box">
+        <span><i class="fas fa-envelope"></i> Mail Balance</span>
+        <div class="mail-val" id="user-mails">0</div>
+    </div>
+</div>
+
+<div class="section-title"><i class="fas fa-bolt"></i> Diamond Refill</div>
+<div class="offer-grid" id="diamond-shop"></div>
+
+<div class="section-title"><i class="fas fa-envelope-open-text"></i> HTML Mail Offers</div>
+<div class="offer-grid" id="mail-shop"></div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    tg.enableClosingConfirmation();
+    
+    // Theme setup
+    document.getElementById('user-name').innerText = tg.initDataUnsafe?.user?.first_name || "Premium User";
+
+    // ব্যালেন্স ডাটা URL থেকে নেওয়া
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('user-diamonds').innerText = urlParams.get('diamonds') || '0';
+    document.getElementById('user-mails').innerText = urlParams.get('mails') || '0';
+
+    // ১. ডায়মন্ড অফার জেনারেট করা
+    const dShop = document.getElementById('diamond-shop');
+    for (let d = 25; d <= 500; d += 25) {
+        let stars = Math.floor(d * 1.28);
+        dShop.innerHTML += `
+            <div class="offer-card">
+                <div class="offer-info">
+                    <div class="offer-icon" style="color:var(--accent-diamond)"><i class="fas fa-gem"></i></div>
+                    <div class="offer-details"><b>${d} Diamonds</b><span>Get 💎 with Stars</span></div>
+                </div>
+                <button class="buy-btn btn-star" onclick="confirmOrder('buy_diamond', ${d}, ${stars}, '⭐️')">⭐️ ${stars}</button>
+            </div>`;
+    }
+
+    // ২. মেইল অফার জেনারেট করা
+    const mailOffers = [
+        {mail: 40, cost: 25}, {mail: 85, cost: 50}, {mail: 130, cost: 75},
+        {mail: 170, cost: 100}, {mail: 210, cost: 125}, {mail: 250, cost: 150},
+        {mail: 290, cost: 175}, {mail: 330, cost: 200}, {mail: 490, cost: 300},
+        {mail: 650, cost: 400}, {mail: 820, cost: 500}
+    ];
+
+    const mShop = document.getElementById('mail-shop');
+    mailOffers.forEach((o, index) => {
+        mShop.innerHTML += `
+            <div class="offer-card" style="animation-delay: ${index * 0.05}s">
+                <div class="offer-info">
+                    <div class="offer-icon" style="color:white"><i class="fas fa-paper-plane"></i></div>
+                    <div class="offer-details"><b>${o.mail} HTML Mail</b><span>Buy with Diamonds</span></div>
+                </div>
+                <button class="buy-btn btn-dia" onclick="confirmOrder('buy_mail', ${o.mail}, ${o.cost}, '💎')">💎 ${o.cost}</button>
+            </div>`;
+    });
+
+    function confirmOrder(type, amt, price, unit) {
+        tg.showConfirm(`Are you sure you want to purchase ${amt} units for ${unit}${price}?`, (confirmed) => {
+            if (confirmed) {
+                tg.HapticFeedback.notificationOccurred('success');
+                const data = { action: type, amount: amt, cost: price };
+                tg.sendData(JSON.stringify(data));
+                tg.close();
+            }
+        });
+    }
+</script>
+</body>
+</html>
