@@ -1,1 +1,695 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>প্রিমিয়াম HTML মেইল স্টোর</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 1.6em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stars-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin-top: 8px;
+            color: white;
+            font-size: 0.8em;
+        }
+
+        /* User Card */
+        .user-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .user-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 1em;
+        }
+
+        .user-id {
+            font-size: 0.7em;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, #2c3e50, #1a1a2e);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .balance-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85em;
+        }
+
+        .refresh-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75em;
+        }
+
+        .balance-items {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .balance-item {
+            flex: 1;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .balance-icon {
+            font-size: 1.5em;
+            margin-bottom: 3px;
+        }
+
+        .balance-label {
+            font-size: 0.7em;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .balance-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            color: #667eea;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Package Cards */
+        .packages-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .package-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .package-card:hover {
+            transform: translateX(5px);
+        }
+
+        .package-card.popular {
+            border-left: 4px solid #f5af19;
+        }
+
+        .package-title {
+            font-weight: bold;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .package-desc {
+            font-size: 0.7em;
+            color: #666;
+        }
+
+        .popular-tag {
+            background: #f5af19;
+            color: white;
+            font-size: 0.6em;
+            padding: 2px 6px;
+            border-radius: 20px;
+            margin-left: 6px;
+        }
+
+        .price-amount {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .buy-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 320px;
+            width: 85%;
+            text-align: center;
+        }
+
+        .modal-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .modal-details {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 12px;
+            margin: 12px 0;
+            font-size: 0.85em;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1500;
+            animation: fadeOut 3s forwards;
+            font-size: 0.85em;
+        }
+
+        .toast.success { background: #27ae60; }
+        .toast.error { background: #e74c3c; }
+        .toast.info { background: #3498db; }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.7em;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ HTML MAIL SENDER ✨</h1>
+            <div class="stars-badge">
+                <span>⭐</span>
+                <span>Telegram Stars Payment</span>
+            </div>
+        </div>
+
+        <div class="user-card" id="userCard">
+            <div>
+                <div class="user-name" id="userName">Loading...</div>
+                <div class="user-id" id="userId"></div>
+            </div>
+        </div>
+
+        <div class="balance-card">
+            <div class="balance-title">
+                <span>💰 আমার ব্যালেন্স</span>
+                <button class="refresh-btn" onclick="refreshBalance()">⟳ রিফ্রেশ</button>
+            </div>
+            <div class="balance-items">
+                <div class="balance-item">
+                    <div class="balance-icon">💎</div>
+                    <div class="balance-label">ডায়মন্ড</div>
+                    <div class="balance-value" id="diamondBalance">0</div>
+                </div>
+                <div class="balance-item">
+                    <div class="balance-icon">📧</div>
+                    <div class="balance-label">ইমেইল</div>
+                    <div class="balance-value" id="emailBalance">5</div>
+                </div>
+                <div class="balance-item">
+                    <div class="balance-icon">🎁</div>
+                    <div class="balance-label">ফ্রি ইমেইল</div>
+                    <div class="balance-value" id="freeBalance">5</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="diamonds">⭐ ডায়মন্ড কিনুন</button>
+            <button class="tab-btn" data-tab="mails">💎 মেইল প্যাক কিনুন</button>
+        </div>
+
+        <div id="diamonds" class="tab-content active">
+            <div class="packages-grid" id="diamondPackages"></div>
+        </div>
+
+        <div id="mails" class="tab-content">
+            <div class="packages-grid" id="mailPackages"></div>
+        </div>
+
+        <div class="footer">
+            <p>💡 ডায়মন্ড কিনতে প্যাকেজে ক্লিক করুন → পেমেন্ট করুন → ডায়মন্ড পাবেন</p>
+            <p>📞 সাপোর্ট: @Anik7660</p>
+        </div>
+    </div>
+
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">⭐</div>
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-details" id="modalDetails"></div>
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="confirmBtn">✅ কনফার্ম</button>
+                <button class="cancel-btn" id="cancelModalBtn">❌ বাতিল</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bot Configuration
+        const BOT_USERNAME = "HTML_MAIL_SENDER_BOT";
+        const BOT_TOKEN = "8783295110:AAHDUliolZ07YZoCa7mGyXs1tCx5Ga5Q1Yk";
+        
+        let currentUser = null;
+        let selectedPackage = null;
+        
+        // Package Data
+        const DIAMOND_PACKAGES = [
+            { stars: 32, diamonds: 25, popular: false },
+            { stars: 64, diamonds: 50, popular: false },
+            { stars: 96, diamonds: 75, popular: false },
+            { stars: 128, diamonds: 100, popular: true },
+            { stars: 160, diamonds: 125, popular: false },
+            { stars: 192, diamonds: 150, popular: false },
+            { stars: 224, diamonds: 175, popular: false },
+            { stars: 256, diamonds: 200, popular: false },
+            { stars: 320, diamonds: 250, popular: false },
+            { stars: 384, diamonds: 300, popular: false },
+            { stars: 448, diamonds: 350, popular: false },
+            { stars: 512, diamonds: 400, popular: false },
+            { stars: 576, diamonds: 450, popular: false },
+            { stars: 640, diamonds: 500, popular: false }
+        ];
+        
+        const MAIL_PACKAGES = [
+            { diamonds: 25, emails: 40, popular: false },
+            { diamonds: 50, emails: 85, popular: false },
+            { diamonds: 75, emails: 130, popular: false },
+            { diamonds: 100, emails: 170, popular: true },
+            { diamonds: 125, emails: 210, popular: false },
+            { diamonds: 150, emails: 250, popular: false },
+            { diamonds: 175, emails: 290, popular: false },
+            { diamonds: 200, emails: 330, popular: false },
+            { diamonds: 250, emails: 415, popular: false },
+            { diamonds: 300, emails: 500, popular: false },
+            { diamonds: 350, emails: 580, popular: false },
+            { diamonds: 400, emails: 660, popular: false },
+            { diamonds: 450, emails: 745, popular: false },
+            { diamonds: 500, emails: 830, popular: false }
+        ];
+        
+        function renderDiamondPackages() {
+            const container = document.getElementById('diamondPackages');
+            container.innerHTML = DIAMOND_PACKAGES.map(pkg => `
+                <div class="package-card ${pkg.popular ? 'popular' : ''}" onclick="selectDiamondPackage(${pkg.stars}, ${pkg.diamonds})">
+                    <div>
+                        <div class="package-title">⭐ ${pkg.stars} স্টার ${pkg.popular ? '<span class="popular-tag">🔥 জনপ্রিয়</span>' : ''}</div>
+                        <div class="package-desc">পাবেন ${pkg.diamonds} ডায়মন্ড</div>
+                    </div>
+                    <div class="buy-icon">⭐</div>
+                </div>
+            `).join('');
+        }
+        
+        function renderMailPackages() {
+            const container = document.getElementById('mailPackages');
+            container.innerHTML = MAIL_PACKAGES.map(pkg => `
+                <div class="package-card ${pkg.popular ? 'popular' : ''}" onclick="selectMailPackage(${pkg.diamonds}, ${pkg.emails})">
+                    <div>
+                        <div class="package-title">💎 ${pkg.diamonds} ডায়মন্ড ${pkg.popular ? '<span class="popular-tag">🔥 বেস্ট ভ্যালু</span>' : ''}</div>
+                        <div class="package-desc">পাবেন ${pkg.emails} HTML মেইল</div>
+                    </div>
+                    <div class="buy-icon">💎</div>
+                </div>
+            `).join('');
+        }
+        
+        function selectDiamondPackage(stars, diamonds) {
+            selectedPackage = { type: 'diamond', stars: stars, diamonds: diamonds };
+            
+            document.getElementById('modalIcon').innerHTML = '⭐';
+            document.getElementById('modalTitle').innerHTML = `${stars} স্টার = ${diamonds} ডায়মন্ড`;
+            document.getElementById('modalDetails').innerHTML = `
+                <p>⭐ টেলিগ্রাম স্টার: ${stars}</p>
+                <p>💎 ডায়মন্ড পাবেন: ${diamonds}</p>
+                <hr>
+                <p>✅ কনফার্ম করলে পেমেন্ট পেজে যাবে</p>
+            `;
+            document.getElementById('purchaseModal').style.display = 'flex';
+        }
+        
+        function selectMailPackage(diamonds, emails) {
+            const currentDiamonds = parseInt(document.getElementById('diamondBalance').innerText) || 0;
+            
+            if (currentDiamonds < diamonds) {
+                showToast(`❌ পর্যাপ্ত ডায়মন্ড নেই! প্রয়োজন: ${diamonds}`, 'error');
+                return;
+            }
+            
+            selectedPackage = { type: 'mail', diamonds: diamonds, emails: emails };
+            
+            document.getElementById('modalIcon').innerHTML = '💎';
+            document.getElementById('modalTitle').innerHTML = `${diamonds} ডায়মন্ড = ${emails} মেইল`;
+            document.getElementById('modalDetails').innerHTML = `
+                <p>💎 খরচ হবে: ${diamonds} ডায়মন্ড</p>
+                <p>📧 পাবেন: ${emails} ইমেইল</p>
+                <p>💎 আপনার ডায়মন্ড: ${currentDiamonds}</p>
+                <hr>
+                <p>✅ কনফার্ম করলেই ডায়মন্ড কেটে ইমেইল যোগ হবে</p>
+            `;
+            document.getElementById('purchaseModal').style.display = 'flex';
+        }
+        
+        async function confirmPurchase() {
+            if (!selectedPackage) {
+                closeModal();
+                return;
+            }
+            
+            closeModal();
+            
+            if (selectedPackage.type === 'diamond') {
+                // Open bot for payment
+                const botUrl = `https://t.me/${BOT_USERNAME}?start=pay_${selectedPackage.stars}_${selectedPackage.diamonds}`;
+                window.open(botUrl, '_blank');
+                showToast('⭐ বটে পেমেন্ট পেজ খোলা হবে!', 'info');
+            } 
+            else if (selectedPackage.type === 'mail') {
+                const currentDiamonds = parseInt(document.getElementById('diamondBalance').innerText);
+                
+                if (currentDiamonds >= selectedPackage.diamonds) {
+                    // Update balance
+                    const newDiamonds = currentDiamonds - selectedPackage.diamonds;
+                    const currentEmails = parseInt(document.getElementById('emailBalance').innerText);
+                    const newEmails = currentEmails + selectedPackage.emails;
+                    
+                    document.getElementById('diamondBalance').innerText = newDiamonds;
+                    document.getElementById('emailBalance').innerText = newEmails;
+                    
+                    // Save to localStorage
+                    if (currentUser) {
+                        localStorage.setItem(`user_${currentUser.id}`, JSON.stringify({
+                            diamonds: newDiamonds,
+                            emails: newEmails,
+                            free: parseInt(document.getElementById('freeBalance').innerText)
+                        }));
+                    }
+                    
+                    showToast(`✅ ${selectedPackage.emails} ইমেইল যোগ হয়েছে!`, 'success');
+                    
+                    // Notify bot
+                    try {
+                        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                chat_id: currentUser.id,
+                                text: `✅ ওয়েব স্টোর থেকে কেনা: ${selectedPackage.diamonds} 💎 ডায়মন্ডের বিনিময়ে ${selectedPackage.emails} 📧 ইমেইল ক্রয় করা হয়েছে!\n\nবর্তমান ইমেইল ব্যালেন্স: ${newEmails}`,
+                                parse_mode: 'HTML'
+                            })
+                        });
+                    } catch(e) {}
+                } else {
+                    showToast('❌ পর্যাপ্ত ডায়মন্ড নেই!', 'error');
+                }
+            }
+            
+            selectedPackage = null;
+        }
+        
+        async function refreshBalance() {
+            showToast('⟳ ব্যালেন্স রিফ্রেশ করা হচ্ছে...', 'info');
+            
+            if (currentUser && currentUser.id) {
+                const saved = localStorage.getItem(`user_${currentUser.id}`);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('diamondBalance').innerText = data.diamonds || 0;
+                    document.getElementById('emailBalance').innerText = data.emails || 5;
+                    document.getElementById('freeBalance').innerText = data.free || 5;
+                    showToast('✅ ব্যালেন্স আপডেট করা হয়েছে!', 'success');
+                } else {
+                    // Default values
+                    document.getElementById('diamondBalance').innerText = '0';
+                    document.getElementById('emailBalance').innerText = '5';
+                    document.getElementById('freeBalance').innerText = '5';
+                }
+            }
+        }
+        
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        function closeModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
+            selectedPackage = null;
+        }
+        
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+        
+        document.getElementById('confirmBtn').addEventListener('click', confirmPurchase);
+        document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
+        
+        // Close modal on outside click
+        window.onclick = (event) => {
+            if (event.target === document.getElementById('purchaseModal')) closeModal();
+        };
+        
+        // Initialize Telegram WebApp
+        function initTelegramWebApp() {
+            // Check if running in Telegram
+            if (window.Telegram && Telegram.WebApp) {
+                const webApp = Telegram.WebApp;
+                webApp.ready();
+                webApp.expand(); // Expand to full height
+                
+                const initData = webApp.initDataUnsafe;
+                
+                if (initData && initData.user) {
+                    currentUser = {
+                        id: initData.user.id,
+                        first_name: initData.user.first_name,
+                        username: initData.user.username,
+                        last_name: initData.user.last_name
+                    };
+                    
+                    document.getElementById('userName').innerHTML = `👤 ${currentUser.first_name} ${currentUser.last_name || ''}`;
+                    document.getElementById('userId').innerHTML = `ID: ${currentUser.id}`;
+                    
+                    // Load saved data
+                    const saved = localStorage.getItem(`user_${currentUser.id}`);
+                    if (saved) {
+                        const data = JSON.parse(saved);
+                        document.getElementById('diamondBalance').innerText = data.diamonds || 0;
+                        document.getElementById('emailBalance').innerText = data.emails || 5;
+                        document.getElementById('freeBalance').innerText = data.free || 5;
+                    }
+                    
+                    // Send welcome message to bot
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: currentUser.id,
+                            text: `🛒 ওয়েব স্টোর ওপেন করা হয়েছে!\n\n👤 ইউজার: ${currentUser.first_name}\n🆔 ID: ${currentUser.id}\n\nডায়মন্ড ও মেইল প্যাক কিনতে পারেন!`,
+                            parse_mode: 'HTML'
+                        })
+                    }).catch(e => console.log('Cannot send to bot', e));
+                    
+                } else {
+                    document.getElementById('userName').innerHTML = '👤 অতিথি ব্যবহারকারী';
+                    document.getElementById('userId').innerHTML = 'বট থেকে স্টোর ওপেন করুন';
+                }
+            } else {
+                // Not in Telegram WebApp - show demo
+                document.getElementById('userName').innerHTML = '⚠️ টেলিগ্রাম অ্যাপ থেকে খুলুন';
+                document.getElementById('userId').innerHTML = '@HTML_MAIL_SENDER_BOT';
+                document.getElementById('diamondBalance').innerText = '0';
+                document.getElementById('emailBalance').innerText = '5';
+                document.getElementById('freeBalance').innerText = '5';
+            }
+        }
+        
+        // Auto save balance periodically
+        setInterval(() => {
+            if (currentUser && currentUser.id) {
+                localStorage.setItem(`user_${currentUser.id}`, JSON.stringify({
+                    diamonds: parseInt(document.getElementById('diamondBalance').innerText),
+                    emails: parseInt(document.getElementById('emailBalance').innerText),
+                    free: parseInt(document.getElementById('freeBalance').innerText)
+                }));
+            }
+        }, 5000);
+        
+        // Initialize
+        renderDiamondPackages();
+        renderMailPackages();
+        initTelegramWebApp();
+    </script>
+</body>
+</html>
