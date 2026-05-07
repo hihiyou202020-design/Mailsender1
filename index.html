@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Premium HTML Mail Sender</title>
+    <title>Diamond Shop - Premium HTML Mail</title>
     <style>
         * {
             margin: 0;
@@ -19,239 +19,200 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Header */
+        /* Header Section */
         .header {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
             text-align: center;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
 
-        .header h1 {
-            color: #667eea;
-            font-size: 24px;
+        .logo {
+            font-size: 3em;
             margin-bottom: 10px;
         }
 
-        .user-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
+        h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 10px 15px;
-            border-radius: 15px;
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        /* User Info */
+        .user-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
             color: white;
             text-align: center;
-            flex: 1;
-            margin: 0 5px;
         }
 
-        .stat-card span:first-child {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        .stat-card span:last-child {
-            font-size: 20px;
+        .diamond-balance {
+            font-size: 2em;
             font-weight: bold;
-            display: block;
+            margin: 10px 0;
+        }
+
+        .diamond-balance span {
+            font-size: 1.5em;
         }
 
         /* Tabs */
         .tabs {
             display: flex;
-            background: rgba(255,255,255,0.95);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            overflow: hidden;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
         .tab {
             flex: 1;
-            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
             padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
             cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            color: #666;
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
 
         .tab.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            background: white;
+            color: #667eea;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
 
-        /* Cards */
-        .card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
-            padding-left: 12px;
-        }
-
-        /* Offer Grid */
-        .offer-grid {
+        /* Products Grid */
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        .offer-item {
-            background: #f8f9fa;
+        .product-card {
+            background: white;
             border-radius: 15px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
         }
 
-        .offer-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .offer-item.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+        .product-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
         }
 
-        .offer-diamonds {
-            font-size: 20px;
+        .product-cost {
+            font-size: 1.5em;
             font-weight: bold;
             color: #667eea;
+            margin: 10px 0;
         }
 
-        .offer-stars {
-            font-size: 14px;
+        .product-value {
+            font-size: 1.2em;
             color: #666;
-            margin-top: 5px;
-        }
-
-        .offer-emails {
-            font-size: 12px;
-            color: #28a745;
-            margin-top: 5px;
-        }
-
-        /* Form Elements */
-        .form-group {
             margin-bottom: 15px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 150px;
-            font-family: monospace;
-        }
-
-        /* Buttons */
-        .btn {
-            width: 100%;
-            padding: 14px;
+        .buy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.2s ease;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
+        .buy-btn:hover {
+            transform: scale(1.05);
         }
 
         /* Messages */
         .message {
-            padding: 12px;
-            border-radius: 12px;
-            margin-top: 15px;
-            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
         }
 
         .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: #4caf50;
         }
 
         .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: #f44336;
         }
 
-        /* Loading */
+        .message.info {
+            background: #2196f3;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Loading Overlay */
         .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
             display: none;
-            text-align: center;
-            padding: 20px;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loading.active {
+            display: flex;
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
         }
 
         @keyframes spin {
@@ -259,399 +220,292 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Saved Emails */
-        .email-item {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .email-item:hover {
-            background: #e9ecef;
-        }
-
-        .email-item.selected {
-            background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
-            border-left: 4px solid #667eea;
-        }
-
-        .email-address {
-            font-weight: 500;
-            color: #333;
-        }
-
         /* Responsive */
-        @media (max-width: 480px) {
-            .offer-grid {
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .products-grid {
                 grid-template-columns: 1fr;
             }
             
-            .user-stats {
+            .tabs {
                 flex-direction: column;
             }
             
-            .stat-card {
-                margin: 5px 0;
+            h1 {
+                font-size: 1.5em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
-            <h1>✨ Premium HTML Mail Sender</h1>
-            <div class="user-stats" id="userStats">
-                <div class="stat-card">
-                    <span>💎 Diamonds</span>
-                    <span id="diamonds">0</span>
-                </div>
-                <div class="stat-card">
-                    <span>📧 Free Emails</span>
-                    <span id="freeEmails">0</span>
-                </div>
-            </div>
+            <div class="logo">💎</div>
+            <h1>Diamond Shop</h1>
+            <p class="subtitle">Premium HTML Mail Service</p>
         </div>
 
-        <!-- Tabs -->
+        <div class="user-info">
+            <div>Welcome, <span id="username">User</span></div>
+            <div class="diamond-balance">
+                💎 <span id="diamondBalance">0</span>
+            </div>
+            <div>Your Balance</div>
+        </div>
+
         <div class="tabs">
-            <div class="tab active" data-tab="buy">💰 Buy Diamonds</div>
-            <div class="tab" data-tab="send">🚀 Send Email</div>
+            <button class="tab active" onclick="switchTab('diamonds')">Buy Diamonds ⭐</button>
+            <button class="tab" onclick="switchTab('mail')">Buy HTML Mail 💌</button>
         </div>
 
-        <!-- Buy Diamonds Tab -->
-        <div id="buyTab" class="card">
-            <div class="card-title">💎 Purchase Diamonds</div>
-            <div class="offer-grid" id="offerGrid"></div>
-            <button class="btn btn-primary" id="buyNowBtn" style="margin-top: 15px;">Buy Now</button>
-            <div id="buyMessage" class="message"></div>
+        <div id="diamondsTab" class="products-grid">
+            <!-- Diamond offers will be dynamically loaded -->
         </div>
 
-        <!-- Send Email Tab -->
-        <div id="sendTab" class="card" style="display: none;">
-            <div class="card-title">📧 Send HTML Email</div>
-            
-            <div class="form-group">
-                <label>📤 Select Sender Email:</label>
-                <select id="senderSelect">
-                    <option value="">Loading emails...</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>👤 Recipient Email:</label>
-                <input type="email" id="recipientEmail" placeholder="recipient@example.com">
-            </div>
-            
-            <div class="form-group">
-                <label>📝 Subject:</label>
-                <input type="text" id="emailSubject" placeholder="Enter email subject">
-            </div>
-            
-            <div class="form-group">
-                <label>💻 HTML Body:</label>
-                <textarea id="htmlBody" placeholder="<h1>Hello World!</h1><p>Your HTML content here...</p>"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label>💎 Diamond Cost:</label>
-                <div id="diamondCost">1 💎 per email (for HTML)</div>
-            </div>
-            
-            <button class="btn btn-primary" id="sendEmailBtn">Send Email</button>
-            <div id="sendMessage" class="message"></div>
-        </div>
-
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p style="margin-top: 10px;">Processing...</p>
+        <div id="mailTab" class="products-grid" style="display: none;">
+            <!-- Mail offers will be dynamically loaded -->
         </div>
     </div>
 
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
     <script>
-        // Configuration
-        const WEBAPP_DATA = window.Telegram.WebApp.initData || '';
-        
-        // State
-        let userData = {
-            diamonds: 0,
-            freeEmails: 0
-        };
-        
-        let selectedOffer = null;
-        let savedEmails = [];
-        let selectedEmailId = null;
-        
-        // Diamond to Email conversion (1 diamond = 1.6 emails approx)
-        const DIAMOND_TO_EMAIL_RATIO = 1.6;
-        
-        // Predefined offers
-        const offers = [];
-        for (let diamonds = 25; diamonds <= 500; diamonds += 25) {
-            const emails = Math.floor(diamonds * DIAMOND_TO_EMAIL_RATIO);
-            const stars = Math.ceil(diamonds / 25) * 32;
-            offers.push({ diamonds, emails, stars });
-        }
-        
-        // Initialize Telegram WebApp
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.MainButton.hide();
-        
-        // Load user data from bot
-        async function loadUserData() {
-            showLoading(true);
-            try {
-                // Send message to bot to get user stats
-                const response = await fetch('/api/user_stats', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ initData: WEBAPP_DATA })
+        // Get Telegram WebApp data
+        let tg = window.Telegram.WebApp;
+        let user = tg.initDataUnsafe?.user;
+        let userId = user?.id || Math.floor(Math.random() * 1000000);
+        let username = user?.username || user?.first_name || 'Guest';
+
+        document.getElementById('username').textContent = username;
+
+        // API Configuration
+        const API_URL = 'https://your-bot-domain.com'; // Replace with your bot's domain
+        // For local testing, you can use: const API_URL = 'http://localhost:8000';
+
+        // Generate diamond offers (32⭐ = 25💎 up to 500💎)
+        function generateDiamondOffers() {
+            const offers = [];
+            for (let diamonds = 25; diamonds <= 500; diamonds += 25) {
+                const stars = Math.ceil((diamonds * 32) / 25);
+                offers.push({
+                    diamonds: diamonds,
+                    stars: stars,
+                    price: stars
                 });
-                if (response.ok) {
-                    const data = await response.json();
-                    userData = data;
-                    updateStatsDisplay();
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
             }
-            showLoading(false);
+            return offers;
         }
-        
-        // Load saved emails
-        async function loadSavedEmails() {
-            try {
-                const response = await fetch('/api/emails', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ initData: WEBAPP_DATA, action: 'list' })
+
+        // Generate mail offers (25💎 = 40 mails up to 500💎)
+        function generateMailOffers() {
+            const offers = [];
+            for (let diamonds = 25; diamonds <= 500; diamonds += 25) {
+                let mails;
+                if (diamonds === 25) mails = 40;
+                else if (diamonds === 50) mails = 85;
+                else if (diamonds === 75) mails = 130;
+                else if (diamonds === 100) mails = 170;
+                else if (diamonds === 125) mails = 210;
+                else if (diamonds === 150) mails = 250;
+                else if (diamonds === 175) mails = 290;
+                else if (diamonds === 200) mails = 330;
+                else {
+                    // For higher values: ~1.65 mails per diamond
+                    mails = Math.floor(diamonds * 1.65);
+                }
+                offers.push({
+                    diamonds: diamonds,
+                    mails: mails,
+                    cost: diamonds
                 });
-                if (response.ok) {
-                    const data = await response.json();
-                    savedEmails = data.emails || [];
-                    updateEmailSelect();
-                }
-            } catch (error) {
-                console.error('Error loading emails:', error);
             }
+            return offers;
         }
-        
-        // Update email select dropdown
-        function updateEmailSelect() {
-            const select = document.getElementById('senderSelect');
-            if (savedEmails.length === 0) {
-                select.innerHTML = '<option value="">No saved emails. Add one in the bot.</option>';
-                return;
-            }
+
+        // Display diamond offers
+        function displayDiamondOffers() {
+            const container = document.getElementById('diamondsTab');
+            const offers = generateDiamondOffers();
             
-            select.innerHTML = '<option value="">Select an email...</option>' + 
-                savedEmails.map(email => `<option value="${email.id}">${email.email}</option>`).join('');
-            
-            select.onchange = (e) => {
-                selectedEmailId = e.target.value;
-            };
-        }
-        
-        // Update stats display
-        function updateStatsDisplay() {
-            document.getElementById('diamonds').textContent = userData.diamonds || 0;
-            document.getElementById('freeEmails').textContent = userData.freeEmails || 0;
-        }
-        
-        // Render offers
-        function renderOffers() {
-            const grid = document.getElementById('offerGrid');
-            grid.innerHTML = offers.map(offer => `
-                <div class="offer-item" data-diamonds="${offer.diamonds}" data-stars="${offer.stars}" data-emails="${offer.emails}">
-                    <div class="offer-diamonds">💎 ${offer.diamonds}</div>
-                    <div class="offer-stars">⭐ ${offer.stars} Stars</div>
-                    <div class="offer-emails">📧 ${offer.emails} Emails</div>
+            container.innerHTML = offers.map(offer => `
+                <div class="product-card">
+                    <div class="product-icon">⭐</div>
+                    <div class="product-cost">${offer.stars} Stars</div>
+                    <div class="product-value">Get ${offer.diamonds} 💎</div>
+                    <button class="buy-btn" onclick="buyDiamonds(${offer.diamonds}, ${offer.stars})">
+                        Buy Now
+                    </button>
                 </div>
             `).join('');
-            
-            // Add click handlers
-            document.querySelectorAll('.offer-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    document.querySelectorAll('.offer-item').forEach(i => i.classList.remove('selected'));
-                    item.classList.add('selected');
-                    selectedOffer = {
-                        diamonds: parseInt(item.dataset.diamonds),
-                        stars: parseInt(item.dataset.stars),
-                        emails: parseInt(item.dataset.emails)
-                    };
-                });
-            });
         }
-        
-        // Buy diamonds
-        async function buyDiamonds() {
-            if (!selectedOffer) {
-                showMessage('buyMessage', 'Please select an offer first!', 'error');
-                return;
-            }
+
+        // Display mail offers
+        function displayMailOffers() {
+            const container = document.getElementById('mailTab');
+            const offers = generateMailOffers();
             
-            showLoading(true);
-            
-            // Send purchase request to bot
-            try {
-                const response = await fetch('/api/purchase', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        initData: WEBAPP_DATA,
-                        diamonds: selectedOffer.diamonds,
-                        stars: selectedOffer.stars
-                    })
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.invoiceLink) {
-                        tg.openInvoice(data.invoiceLink);
-                    } else {
-                        showMessage('buyMessage', 'Payment initiated! Please complete in Telegram.', 'success');
-                    }
-                } else {
-                    showMessage('buyMessage', 'Purchase failed. Please try again.', 'error');
-                }
-            } catch (error) {
-                showMessage('buyMessage', 'Network error. Please try again.', 'error');
-            }
-            
-            showLoading(false);
+            container.innerHTML = offers.map(offer => `
+                <div class="product-card">
+                    <div class="product-icon">📧</div>
+                    <div class="product-cost">${offer.diamonds} 💎</div>
+                    <div class="product-value">Get ${offer.mails} HTML Mails</div>
+                    <button class="buy-btn" onclick="buyMails(${offer.diamonds}, ${offer.mails})">
+                        Purchase
+                    </button>
+                </div>
+            `).join('');
         }
-        
-        // Send email
-        async function sendEmail() {
-            const recipient = document.getElementById('recipientEmail').value.trim();
-            const subject = document.getElementById('emailSubject').value.trim();
-            const htmlBody = document.getElementById('htmlBody').value.trim();
-            
-            if (!selectedEmailId) {
-                showMessage('sendMessage', 'Please select a sender email!', 'error');
-                return;
-            }
-            
-            if (!recipient) {
-                showMessage('sendMessage', 'Please enter recipient email!', 'error');
-                return;
-            }
-            
-            if (!subject) {
-                showMessage('sendMessage', 'Please enter subject!', 'error');
-                return;
-            }
-            
-            if (!htmlBody) {
-                showMessage('sendMessage', 'Please enter HTML body!', 'error');
-                return;
-            }
-            
-            // Validate email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(recipient)) {
-                showMessage('sendMessage', 'Please enter a valid email address!', 'error');
-                return;
-            }
-            
+
+        // Buy diamonds with Telegram Stars
+        async function buyDiamonds(diamonds, stars) {
             showLoading(true);
             
             try {
-                const response = await fetch('/api/send_email', {
+                // Initialize Telegram Stars payment
+                const response = await fetch(`${API_URL}/create-star-invoice`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({
-                        initData: WEBAPP_DATA,
-                        senderId: selectedEmailId,
-                        recipient: recipient,
-                        subject: subject,
-                        htmlBody: htmlBody
+                        user_id: userId,
+                        diamonds: diamonds,
+                        stars: stars,
+                        username: username
                     })
                 });
                 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.success) {
-                        showMessage('sendMessage', '✅ Email sent successfully!', 'success');
-                        // Refresh user stats
-                        await loadUserData();
-                        // Clear form
-                        document.getElementById('recipientEmail').value = '';
-                        document.getElementById('emailSubject').value = '';
-                        document.getElementById('htmlBody').value = '';
-                    } else {
-                        showMessage('sendMessage', data.message || 'Failed to send email!', 'error');
-                    }
+                const data = await response.json();
+                
+                if (data.success && data.invoice_link) {
+                    // Open invoice link in Telegram
+                    tg.openInvoice(data.invoice_link, (status) => {
+                        if (status === 'paid') {
+                            showMessage('Payment successful! Diamonds added to your account.', 'success');
+                            loadUserBalance();
+                        } else {
+                            showMessage('Payment cancelled or failed.', 'error');
+                        }
+                    });
                 } else {
-                    const error = await response.json();
-                    showMessage('sendMessage', error.message || 'Failed to send email!', 'error');
+                    showMessage('Failed to create invoice. Please try again.', 'error');
                 }
             } catch (error) {
-                showMessage('sendMessage', 'Network error. Please try again.', 'error');
+                console.error('Error:', error);
+                showMessage('Network error. Please try again.', 'error');
+            } finally {
+                showLoading(false);
             }
-            
-            showLoading(false);
         }
-        
+
+        // Buy HTML mails with diamonds
+        async function buyMails(diamonds, mails) {
+            showLoading(true);
+            
+            try {
+                const response = await fetch(`${API_URL}/purchase-mails`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        diamonds: diamonds,
+                        mails: mails,
+                        username: username
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(`Successfully purchased ${mails} HTML mails!`, 'success');
+                    loadUserBalance();
+                } else {
+                    showMessage(data.message || 'Insufficient diamonds!', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Network error. Please try again.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Load user's diamond balance
+        async function loadUserBalance() {
+            try {
+                const response = await fetch(`${API_URL}/get-balance?user_id=${userId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('diamondBalance').textContent = data.balance || 0;
+                }
+            } catch (error) {
+                console.error('Error loading balance:', error);
+            }
+        }
+
+        // Switch between tabs
+        function switchTab(tab) {
+            const diamondsTab = document.getElementById('diamondsTab');
+            const mailTab = document.getElementById('mailTab');
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'diamonds') {
+                diamondsTab.style.display = 'grid';
+                mailTab.style.display = 'none';
+                tabs[0].classList.add('active');
+            } else {
+                diamondsTab.style.display = 'none';
+                mailTab.style.display = 'grid';
+                tabs[1].classList.add('active');
+            }
+        }
+
         // Show message
-        function showMessage(elementId, message, type) {
-            const element = document.getElementById(elementId);
-            element.textContent = message;
-            element.className = `message ${type}`;
-            element.style.display = 'block';
+        function showMessage(text, type) {
+            const message = document.createElement('div');
+            message.className = `message ${type}`;
+            message.textContent = text;
+            document.body.appendChild(message);
             
             setTimeout(() => {
-                element.style.display = 'none';
-            }, 5000);
+                message.remove();
+            }, 3000);
         }
-        
+
         // Show/hide loading
         function showLoading(show) {
-            document.getElementById('loading').style.display = show ? 'flex' : 'none';
+            const loading = document.getElementById('loading');
+            if (show) {
+                loading.classList.add('active');
+            } else {
+                loading.classList.remove('active');
+            }
         }
-        
-        // Tab switching
-        function initTabs() {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    const tabName = tab.dataset.tab;
-                    document.getElementById('buyTab').style.display = tabName === 'buy' ? 'block' : 'none';
-                    document.getElementById('sendTab').style.display = tabName === 'send' ? 'block' : 'none';
-                    
-                    if (tabName === 'send') {
-                        loadSavedEmails();
-                    }
-                });
-            });
-        }
-        
-        // Initialize
-        async function init() {
-            renderOffers();
-            initTabs();
+
+        // Initialize app
+        function init() {
+            displayDiamondOffers();
+            displayMailOffers();
+            loadUserBalance();
             
-            document.getElementById('buyNowBtn').addEventListener('click', buyDiamonds);
-            document.getElementById('sendEmailBtn').addEventListener('click', sendEmail);
-            
-            await loadUserData();
-            await loadSavedEmails();
-            
-            // Close WebApp when done
+            // Expand Telegram WebApp
+            tg.expand();
             tg.ready();
         }
-        
-        // Start
+
+        // Start the app
         init();
     </script>
-    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
