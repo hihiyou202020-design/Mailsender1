@@ -2,92 +2,656 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premium Mail Store</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Premium HTML Mail Sender</title>
     <style>
-        :root { --primary: #0088cc; --bg: #0e1621; --card: #1c2732; --diamond: #00d4ff; }
-        body { font-family: sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; }
-        .header { background: linear-gradient(180deg, #2481cc, #165b91); padding: 40px 20px; text-align: center; border-radius: 0 0 30px 30px; }
-        .balance-card { display: flex; background: var(--card); margin: -25px 20px 20px; padding: 20px; border-radius: 20px; justify-content: space-around; box-shadow: 0 10px 20px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }
-        .bal-box b { display: block; font-size: 22px; color: var(--diamond); }
-        .section-title { padding: 10px 25px; font-size: 13px; color: #8e97a1; text-transform: uppercase; letter-spacing: 1px; }
-        .offer-card { background: var(--card); margin: 0 20px 10px; padding: 18px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; }
-        .buy-btn { background: var(--primary); border: none; padding: 12px 18px; color: white; border-radius: 12px; font-weight: bold; cursor: pointer; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .user-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 10px 15px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+        }
+
+        .stat-card span:first-child {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .stat-card span:last-child {
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            padding-left: 12px;
+        }
+
+        /* Offer Grid */
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .offer-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .offer-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .offer-item.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+        }
+
+        .offer-diamonds {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .offer-stars {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .offer-emails {
+            font-size: 12px;
+            color: #28a745;
+            margin-top: 5px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+            font-family: monospace;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        /* Messages */
+        .message {
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Saved Emails */
+        .email-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .email-item:hover {
+            background: #e9ecef;
+        }
+
+        .email-item.selected {
+            background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+            border-left: 4px solid #667eea;
+        }
+
+        .email-address {
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .offer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-stats {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                margin: 5px 0;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>✨ Premium HTML Mail Sender</h1>
+            <div class="user-stats" id="userStats">
+                <div class="stat-card">
+                    <span>💎 Diamonds</span>
+                    <span id="diamonds">0</span>
+                </div>
+                <div class="stat-card">
+                    <span>📧 Free Emails</span>
+                    <span id="freeEmails">0</span>
+                </div>
+            </div>
+        </div>
 
-<div class="header"><h2>Premium Store</h2><p>Official Refill Center</p></div>
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" data-tab="buy">💰 Buy Diamonds</div>
+            <div class="tab" data-tab="send">🚀 Send Email</div>
+        </div>
 
-<div class="balance-card">
-    <div class="bal-box"><span>Diamonds</span><b id="stat-diamonds">0</b></div>
-    <div class="bal-box"><span>Mails</span><b id="stat-mails" style="color:white">0</b></div>
-</div>
+        <!-- Buy Diamonds Tab -->
+        <div id="buyTab" class="card">
+            <div class="card-title">💎 Purchase Diamonds</div>
+            <div class="offer-grid" id="offerGrid"></div>
+            <button class="btn btn-primary" id="buyNowBtn" style="margin-top: 15px;">Buy Now</button>
+            <div id="buyMessage" class="message"></div>
+        </div>
 
-<div class="section-title">💎 Buy Diamonds (Stars)</div>
-<div id="diamond-offers"></div>
+        <!-- Send Email Tab -->
+        <div id="sendTab" class="card" style="display: none;">
+            <div class="card-title">📧 Send HTML Email</div>
+            
+            <div class="form-group">
+                <label>📤 Select Sender Email:</label>
+                <select id="senderSelect">
+                    <option value="">Loading emails...</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>👤 Recipient Email:</label>
+                <input type="email" id="recipientEmail" placeholder="recipient@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label>📝 Subject:</label>
+                <input type="text" id="emailSubject" placeholder="Enter email subject">
+            </div>
+            
+            <div class="form-group">
+                <label>💻 HTML Body:</label>
+                <textarea id="htmlBody" placeholder="<h1>Hello World!</h1><p>Your HTML content here...</p>"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>💎 Diamond Cost:</label>
+                <div id="diamondCost">1 💎 per email (for HTML)</div>
+            </div>
+            
+            <button class="btn btn-primary" id="sendEmailBtn">Send Email</button>
+            <div id="sendMessage" class="message"></div>
+        </div>
 
-<div class="section-title">📧 Buy Mails (Diamonds)</div>
-<div id="mail-offers"></div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px;">Processing...</p>
+        </div>
+    </div>
 
-<script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
-
-    // হোস্টিং করার পর পাওয়া এপিআই লিংক এখানে বসান
-    const API_BASE = "https://your-cloud-app.koyeb.app"; 
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('user_id');
-    document.getElementById('stat-diamonds').innerText = urlParams.get('diamonds') || '0';
-    document.getElementById('stat-mails').innerText = urlParams.get('mails') || '0';
-
-    function initStore() {
-        const dDiv = document.getElementById('diamond-offers');
-        for(let d=25; d<=500; d+=25) {
-            let s = Math.floor(d * 1.28);
-            dDiv.innerHTML += `<div class="offer-card"><div><b>💎 ${d} Diamonds</b><br><small>⭐️ ${s} Stars</small></div><button class="buy-btn" onclick="buyDiamond(${d}, ${s})">⭐️ Buy</button></div>`;
+    <script>
+        // Configuration
+        const WEBAPP_DATA = window.Telegram.WebApp.initData || '';
+        
+        // State
+        let userData = {
+            diamonds: 0,
+            freeEmails: 0
+        };
+        
+        let selectedOffer = null;
+        let savedEmails = [];
+        let selectedEmailId = null;
+        
+        // Diamond to Email conversion (1 diamond = 1.6 emails approx)
+        const DIAMOND_TO_EMAIL_RATIO = 1.6;
+        
+        // Predefined offers
+        const offers = [];
+        for (let diamonds = 25; diamonds <= 500; diamonds += 25) {
+            const emails = Math.floor(diamonds * DIAMOND_TO_EMAIL_RATIO);
+            const stars = Math.ceil(diamonds / 25) * 32;
+            offers.push({ diamonds, emails, stars });
         }
-
-        const mDiv = document.getElementById('mail-offers');
-        const mOff = [{m:40,d:25}, {m:85,d:50}, {m:130,d:75}, {m:170,d:100}, {m:330,d:200}, {m:820,d:500}];
-        mOff.forEach(o => {
-            mDiv.innerHTML += `<div class="offer-card"><div><b>📧 ${o.m} Mails</b><br><small>💎 ${o.d} Diamonds</small></div><button class="buy-btn" onclick="buyMail(${o.m}, ${o.d})">💎 Buy</button></div>`;
-        });
-    }
-    initStore();
-
-    async function buyDiamond(amt, price) {
-        tg.showConfirm(`Confirm purchase?`, async (ok) => {
-            if(ok) {
-                const res = await fetch(`${API_BASE}/get-invoice`, {
-                    method:'POST', body: JSON.stringify({user_id:userId, amount:amt, cost:price, action:'buy_diamond'})
+        
+        // Initialize Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.MainButton.hide();
+        
+        // Load user data from bot
+        async function loadUserData() {
+            showLoading(true);
+            try {
+                // Send message to bot to get user stats
+                const response = await fetch('/api/user_stats', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData: WEBAPP_DATA })
                 });
-                const data = await res.json();
-                if(data.ok) {
-                    // ইন-অ্যাপ পেমেন্ট শিট ওপেন
-                    tg.openInvoice(data.invoice_link, (status) => {
-                        if(status==='paid') { tg.showAlert("Payment Success!"); location.reload(); }
-                    });
+                if (response.ok) {
+                    const data = await response.json();
+                    userData = data;
+                    updateStatsDisplay();
                 }
+            } catch (error) {
+                console.error('Error loading user data:', error);
             }
-        });
-    }
-
-    async function buyMail(amt, price) {
-        tg.showConfirm(`Exchange ${price} Diamonds for ${amt} Mails?`, async (ok) => {
-            if(ok) {
-                const res = await fetch(`${API_BASE}/swap-mails`, {
-                    method:'POST', body: JSON.stringify({user_id:userId, amount:amt, cost:price})
+            showLoading(false);
+        }
+        
+        // Load saved emails
+        async function loadSavedEmails() {
+            try {
+                const response = await fetch('/api/emails', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData: WEBAPP_DATA, action: 'list' })
                 });
-                const data = await res.json();
-                if(data.ok) { tg.showAlert("Mails Added!"); location.reload(); }
-                else { tg.showAlert("Insufficient Diamonds!"); }
+                if (response.ok) {
+                    const data = await response.json();
+                    savedEmails = data.emails || [];
+                    updateEmailSelect();
+                }
+            } catch (error) {
+                console.error('Error loading emails:', error);
             }
-        });
-    }
-</script>
+        }
+        
+        // Update email select dropdown
+        function updateEmailSelect() {
+            const select = document.getElementById('senderSelect');
+            if (savedEmails.length === 0) {
+                select.innerHTML = '<option value="">No saved emails. Add one in the bot.</option>';
+                return;
+            }
+            
+            select.innerHTML = '<option value="">Select an email...</option>' + 
+                savedEmails.map(email => `<option value="${email.id}">${email.email}</option>`).join('');
+            
+            select.onchange = (e) => {
+                selectedEmailId = e.target.value;
+            };
+        }
+        
+        // Update stats display
+        function updateStatsDisplay() {
+            document.getElementById('diamonds').textContent = userData.diamonds || 0;
+            document.getElementById('freeEmails').textContent = userData.freeEmails || 0;
+        }
+        
+        // Render offers
+        function renderOffers() {
+            const grid = document.getElementById('offerGrid');
+            grid.innerHTML = offers.map(offer => `
+                <div class="offer-item" data-diamonds="${offer.diamonds}" data-stars="${offer.stars}" data-emails="${offer.emails}">
+                    <div class="offer-diamonds">💎 ${offer.diamonds}</div>
+                    <div class="offer-stars">⭐ ${offer.stars} Stars</div>
+                    <div class="offer-emails">📧 ${offer.emails} Emails</div>
+                </div>
+            `).join('');
+            
+            // Add click handlers
+            document.querySelectorAll('.offer-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.offer-item').forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                    selectedOffer = {
+                        diamonds: parseInt(item.dataset.diamonds),
+                        stars: parseInt(item.dataset.stars),
+                        emails: parseInt(item.dataset.emails)
+                    };
+                });
+            });
+        }
+        
+        // Buy diamonds
+        async function buyDiamonds() {
+            if (!selectedOffer) {
+                showMessage('buyMessage', 'Please select an offer first!', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            
+            // Send purchase request to bot
+            try {
+                const response = await fetch('/api/purchase', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        initData: WEBAPP_DATA,
+                        diamonds: selectedOffer.diamonds,
+                        stars: selectedOffer.stars
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.invoiceLink) {
+                        tg.openInvoice(data.invoiceLink);
+                    } else {
+                        showMessage('buyMessage', 'Payment initiated! Please complete in Telegram.', 'success');
+                    }
+                } else {
+                    showMessage('buyMessage', 'Purchase failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                showMessage('buyMessage', 'Network error. Please try again.', 'error');
+            }
+            
+            showLoading(false);
+        }
+        
+        // Send email
+        async function sendEmail() {
+            const recipient = document.getElementById('recipientEmail').value.trim();
+            const subject = document.getElementById('emailSubject').value.trim();
+            const htmlBody = document.getElementById('htmlBody').value.trim();
+            
+            if (!selectedEmailId) {
+                showMessage('sendMessage', 'Please select a sender email!', 'error');
+                return;
+            }
+            
+            if (!recipient) {
+                showMessage('sendMessage', 'Please enter recipient email!', 'error');
+                return;
+            }
+            
+            if (!subject) {
+                showMessage('sendMessage', 'Please enter subject!', 'error');
+                return;
+            }
+            
+            if (!htmlBody) {
+                showMessage('sendMessage', 'Please enter HTML body!', 'error');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(recipient)) {
+                showMessage('sendMessage', 'Please enter a valid email address!', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                const response = await fetch('/api/send_email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        initData: WEBAPP_DATA,
+                        senderId: selectedEmailId,
+                        recipient: recipient,
+                        subject: subject,
+                        htmlBody: htmlBody
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        showMessage('sendMessage', '✅ Email sent successfully!', 'success');
+                        // Refresh user stats
+                        await loadUserData();
+                        // Clear form
+                        document.getElementById('recipientEmail').value = '';
+                        document.getElementById('emailSubject').value = '';
+                        document.getElementById('htmlBody').value = '';
+                    } else {
+                        showMessage('sendMessage', data.message || 'Failed to send email!', 'error');
+                    }
+                } else {
+                    const error = await response.json();
+                    showMessage('sendMessage', error.message || 'Failed to send email!', 'error');
+                }
+            } catch (error) {
+                showMessage('sendMessage', 'Network error. Please try again.', 'error');
+            }
+            
+            showLoading(false);
+        }
+        
+        // Show message
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Show/hide loading
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'flex' : 'none';
+        }
+        
+        // Tab switching
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const tabName = tab.dataset.tab;
+                    document.getElementById('buyTab').style.display = tabName === 'buy' ? 'block' : 'none';
+                    document.getElementById('sendTab').style.display = tabName === 'send' ? 'block' : 'none';
+                    
+                    if (tabName === 'send') {
+                        loadSavedEmails();
+                    }
+                });
+            });
+        }
+        
+        // Initialize
+        async function init() {
+            renderOffers();
+            initTabs();
+            
+            document.getElementById('buyNowBtn').addEventListener('click', buyDiamonds);
+            document.getElementById('sendEmailBtn').addEventListener('click', sendEmail);
+            
+            await loadUserData();
+            await loadSavedEmails();
+            
+            // Close WebApp when done
+            tg.ready();
+        }
+        
+        // Start
+        init();
+    </script>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
